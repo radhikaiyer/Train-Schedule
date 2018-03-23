@@ -31,7 +31,10 @@ database.ref().on("value", function(snapshot) {
 
 //We need to grab the information 
 
-$("#addTrainBtn").on("click", function() {
+$("form").on("submit", function(e)
+
+ {
+     e.preventDefault();
 
     var trainName = $("#NameInput").val().trim();
     var destination = $("#destinationInput").val().trim();
@@ -59,14 +62,13 @@ $("#addTrainBtn").on("click", function() {
     // This whole section will be the math section 
     var firstTrainConverted = moment(firstTrain, "hh:mm").subtract("1, years");
 
-    // the time difference between current time and the first train
     var difference = currentTime.diff(moment(firstTrainConverted), "minutes");
     var remainder = difference % frequency;
     var minUntilTrain = frequency - remainder;
     var nextTrain = moment().add(minUntilTrain, "minutes").format("hh:mm a");
 
     var newTrain = {
-        name: Name,
+        name: trainName,
         destination: destination,
         firstTrain: firstTrain,
         frequency: frequency,
